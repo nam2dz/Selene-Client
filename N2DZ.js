@@ -889,6 +889,12 @@
           "Đưa tất cả cài đặt về mặc định"
         )}
 
+        ${feature(
+          "nNewAccount",
+          "👤 Tài khoản mới",
+          "Xóa cookie phiên hiện tại và tải lại trang"
+        )}
+
         <div
           id="N2DZ_MESSAGE"
           style="
@@ -2007,6 +2013,42 @@
     };
 
   /* =========================================================
+     TÀI KHOẢN MỚI
+     ========================================================= */
+
+  $("nNewAccount").onclick = () => {
+
+    if (!confirm(
+      "Bạn có chắc chắn muốn đặt lại phiên làm việc và tạo tài khoản mới không?"
+    )) {
+      return;
+    }
+
+    const cookies = document.cookie.split(";");
+
+    for (let i = 0; i < cookies.length; i++) {
+
+      const cookie = cookies[i].trim();
+      const eqPos = cookie.indexOf("=");
+
+      const name =
+        eqPos > -1
+          ? cookie.substring(0, eqPos)
+          : cookie;
+
+      document.cookie =
+        name +
+        "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+    }
+
+    message("👤 Đang đặt lại phiên và tải lại...");
+
+    setTimeout(() => {
+      location.reload();
+    }, 150);
+  };
+
+  /* =========================================================
      MAIN LOOP
      ========================================================= */
 
@@ -2111,4 +2153,3 @@
   }
 
 })();
-
